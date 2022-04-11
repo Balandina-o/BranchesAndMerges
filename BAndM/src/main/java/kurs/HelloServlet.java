@@ -15,7 +15,7 @@ public class HelloServlet extends HttpServlet {
             throws ServletException, IOException {
           
         response.setContentType("text/html"); //let there be new branch
-        PrintWriter writer = response.getWriter();
+        PrintWriter writer = response.getWriter();//Risotto the best
  
         String name = request.getParameter("username");
         String age = request.getParameter("userage");
@@ -25,7 +25,7 @@ public class HelloServlet extends HttpServlet {
          
         try {
             writer.println("<p>Name: " + name + "</p>");
-            writer.println("<p>Age: " + age + "</p>");
+            writer.println("MEtalicaaAaA " + age + "</p>");
             writer.println("<p>Gender: " + gender + "</p>");
             writer.println("<p>Country: " + country + "</p>");
             writer.println("<h4>Courses</h4>");
