@@ -14,8 +14,8 @@ public class HelloServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
           
-        response.setContentType("text/html");
-        PrintWriter writer = response.getWriter();
+        response.setContentType("text/html"); //let there be MERGE
+        PrintWriter writer = response.getWriter();//Risotto the best
  
         String name = request.getParameter("username");
         String age = request.getParameter("userage");
