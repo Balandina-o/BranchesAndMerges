@@ -16,7 +16,7 @@
     <input type="radio" name="gender" value="male" />Male
     <br><br>
     Country: <select name="country">
-        <option>Canada</option>
+        <option>Italy</option>
         <option>Spain</option>
         <option>France</option>
         <option>Germany</option>
