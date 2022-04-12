@@ -15,8 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/CalcServlet")
 public class CalcServlet extends HttpServlet {
-	private String kadastr, tax, square, part, period, childrens, benefit, town, property;
-	private int IsThereAnErrorsHere = 0; 
+	
+	private String kadastr, tax, square, part, period, childrens, benefit, town, property, textField;
 
 	private static final long serialVersionUID = 1L;
 
@@ -34,22 +34,22 @@ public class CalcServlet extends HttpServlet {
 		this.benefit = request.getParameter("benefit");
 
 
+		request.setAttribute("kadastr", kadastr);
+		request.setAttribute("tax", tax);
+		request.setAttribute("square", square);
+		request.setAttribute("part", part);
+		request.setAttribute("period", period);
+		request.setAttribute("childrens", childrens);
+		request.setAttribute("benefit", benefit);
 
-
-		if (IsThereAnErrorsHere != 0) {
-			request.setAttribute("warnings", calculate());
-			request.setAttribute("kadastr", kadastr);
-			request.setAttribute("tax", tax);
-			
-
-		}else {
-			request.setAttribute("result", calculate());
 		
-		}
+		request.setAttribute("result", calculate());
 		RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/Calculator.jsp");
 		requestDispatcher.forward(request, response);
 
 	}
+	
+	
 
 	public String calculate() {
 		//double reductionFactor = Double.valueOf(this.getRegionConst());
@@ -64,8 +64,7 @@ public class CalcServlet extends HttpServlet {
 				childrens != null ? childrens : "0",
 						benefit != null ? benefit : "0",
 								Double.parseDouble(town),
-								Double.parseDouble(property),
-								evaporaterChoose()
+								Double.parseDouble(property)
 				);
 
 
@@ -74,22 +73,17 @@ public class CalcServlet extends HttpServlet {
 		String text = "";
 		
 		if (errors.size() > 0) {
-			IsThereAnErrorsHere = 1;
 			for (int i = 0; i < errors.size(); i++) {
 				message += errors.get(i).getName() + ": " + errors.get(i).getMessage() + "\n";
-
-				//try {
-				//	String textField = this.getTextFieldByName(errors.get(i).getName());
-				//
-				//} catch (Exception error) {
-				//}
+				
+				
 			}
 			
 			return message;
 
 		} else {
 			
-			BigDecimal ttt = TaxAmount.calculate();
+			BigDecimal ttt = taxamount.calculate();
 			text = ttt.toString();
 			
 			return text;
@@ -101,19 +95,19 @@ public class CalcServlet extends HttpServlet {
 		String field;
 
 		switch (name) {
-		case "Кадастровая стоимость": field = kadastr;
+		case "Кадастровая стоимость": field = "kadastr";
 		break;
-		case "Инвентаризационный налог": field = tax;
+		case "Инвентаризационный налог": field = "tax";
 		break;
-		case "Площадь": field = square;
+		case "Площадь": field = "square";
 		break;
-		case "Размер доли": field = part;
+		case "Размер доли": field = "part";
 		break;
-		case "Период владения": field = period;
+		case "Период владения": field = "period";
 		break;
-		case "Количество детей": field = childrens;
+		case "Количество детей": field = "childrens";
 		break;
-		case "Льгота": field = benefit;
+		case "Льгота": field = "benefit";
 		break;
 		default: throw new Exception("Недопустимое имя параметра");
 		}
@@ -122,22 +116,4 @@ public class CalcServlet extends HttpServlet {
 	}
 
 
-	public double evaporaterChoose() {
-		double evaporater = 0;
-
-		if(Integer.parseInt(this.property) == 10) {
-			evaporater = 5;
-
-		}else if(Integer.parseInt(this.property) == 20) {
-			evaporater = 5;
-
-		}else if(Integer.parseInt(this.property) == 50) {
-			evaporater = 7;
-
-		}else if(Integer.parseInt(this.property) == 0) {
-			evaporater = 0;
-		}
-
-		return evaporater;
-	}
 }
