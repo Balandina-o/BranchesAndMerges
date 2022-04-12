@@ -33,31 +33,31 @@
 
 		<div class="form-input">
 			<label for="">Кадровая стоимость объекта (₽)</label> <input
-				type="number" name="kadastr" value="${kadastr}"/>
+				type="text" name="kadastr" value="${kadastr}"/>
 		</div>
 
 		<div class="form-input">
 			<label for="">Налог на инвертариз. стоимости (₽)</label> <input
-				type="number" name="tax" value="${tax}"/>
+				type="text" name="tax" value="${tax}"/>
 		</div>
 
 		<div class="form-input">
-			<label for="">Площадь объекта (м²)</label> <input type="number" name="square" />
+			<label for="">Площадь объекта (м²)</label> <input type="text" name="square" value="${square}"/>
 		</div>
 
 		<div class="form-input">
 			<label for="">Размер доли в проаве (1/* или 1)</label> <input
-				type="text" name="part" />
+				type="text" name="part" value="${part}"/>
 		</div>
 
 		<div class="form-input">
 			<label for="">Переод владения (в мес. от 1 до 12)</label> <input
-				type="number" min="1" max="12" name="period" />
+				type="text" min="1" max="12" name="period" value="${period}"/>
 		</div>
 
 		<div class="form-input">
 			<label for="">Число несовершеннолетних детей</label> <input
-				name="childrens" type="number" />
+				name="childrens" type="text" value="${childrens}"/>
 		</div>
 
 		<div class="form-input">
@@ -73,12 +73,12 @@
 		</div>
 
 		<div class="form-input">
-			<label for="">Введите размер льготы (%)</label> <input type="number"
-				name="benefit" min="0" max="100" />
+			<label for="">Введите размер льготы (%)</label> <input type="text"
+				name="benefit" min="0" max="100" value="${benefit}"/>
 		</div>
 
 		<div class="form-input">
-			<label for="">Сумма к уплате:</label> <input type="number"
+			<label for="">Сумма к уплате:</label> <input type="text"
 				name="result" value="${result}"/>
 		</div>
 

@@ -4,20 +4,17 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
 public final class TaxAmount{
-
-
-	/** Объявление строковых переменных, хранящих введенные пользователем на старте программы значения */
+	
 	private static String cadastralValueText, inventoryTaxText, squareText, portionText, holdingPeriodRatioText, childrenCountText, exemptionText;
-
-	/** Объявление числовых переменных, в которые записываются значения, прошедшие проверку на корректность*/
-	private static double cadastralValue, inventoryTax, square, portion, holdingPeriodRatio, childrenCount, reductionFactor, deduction, exemption, evaporater;
+	private static double cadastralValue, inventoryTax, square, portion, holdingPeriodRatio, childrenCount, reductionFactor, deduction, exemption;
 
 
-	public TaxAmount(String cadastralValueText, String inventoryTaxText, String squareText, String portionText, String holdingPeriodRatioText, String childrenCountText, String exemptionText, double town, double property, double evapoarter) {
+	public TaxAmount(String cadastralValueText, String inventoryTaxText, String squareText, String portionText, String holdingPeriodRatioText, String childrenCountText, String exemptionText, double town, double property) {
 		TaxAmount.cadastralValueText = cadastralValueText;
 		TaxAmount.inventoryTaxText = inventoryTaxText;
 		TaxAmount.squareText = squareText;
@@ -27,15 +24,12 @@ public final class TaxAmount{
 		TaxAmount.exemptionText = exemptionText;
 		TaxAmount.reductionFactor = town;
 		TaxAmount.deduction = property;
-
-		TaxAmount.evaporater = evaporater;
+		
 	}
 	
-	
-
-
 	public static final List<InputError> validate() {
 		List<InputError> errors = new ArrayList<InputError>();
+	
 		InputNumber cadastralValue = new InputNumber("Кадастровая стоимость", TaxAmount.cadastralValueText);
 		InputNumber inventoryTax = new InputNumber("Инвентаризационный налог", TaxAmount.inventoryTaxText);
 		InputNumber square = new InputNumber("Площадь", TaxAmount.squareText);
@@ -43,60 +37,62 @@ public final class TaxAmount{
 		InputHoldingPeriodRatio holdingPeriodRatio = new InputHoldingPeriodRatio(TaxAmount.holdingPeriodRatioText);
 		InputChildrenCount childrenCount = new InputChildrenCount(TaxAmount.childrenCountText);
 		InputExemption exemption = new InputExemption(TaxAmount.exemptionText);
-
+		
+		//List <Double> values = Arrays.asList(TaxAmount.cadastralValue, TaxAmount.inventoryTax, TaxAmount.square, TaxAmount.portion, TaxAmount.holdingPeriodRatio, TaxAmount.childrenCount, TaxAmount.exemption);
+		//List <Object> samples = Arrays.asList(cadastralValue, inventoryTax, square, portion, holdingPeriodRatio, childrenCount, exemption);
+		
 		try {
-			TaxAmount.cadastralValue = cadastralValue.getValue();
-		} catch (Exception error) {
-			errors.add(new InputError(cadastralValue.getFieldName(), error.getMessage()));
-		}
+		    TaxAmount.cadastralValue = cadastralValue.getValue();
+	    } catch (Exception error) {
+	    errors.add(new InputError(cadastralValue.getFieldName(), error.getMessage()));
+	    }
 
-		try {
-			TaxAmount.inventoryTax = inventoryTax.getValue();
-		} catch (Exception error) {
-			errors.add(new InputError(inventoryTax.getFieldName(), error.getMessage()));
-		}
+	    try {
+	    TaxAmount.inventoryTax = inventoryTax.getValue();
+	    } catch (Exception error) {
+	    errors.add(new InputError(inventoryTax.getFieldName(), error.getMessage()));
+	    }
 
-		try {
-			TaxAmount.square = square.getValue();
-		} catch (Exception error) {
-			errors.add(new InputError(square.getFieldName(), error.getMessage()));
-		}
+	    try {
+	    TaxAmount.square = square.getValue();
+	    } catch (Exception error) {
+	    errors.add(new InputError(square.getFieldName(), error.getMessage()));
+	    }
 
-		try {
-			TaxAmount.portion = portion.getValue();
-		} catch (Exception error) {
-			errors.add(new InputError(portion.getFieldName(), error.getMessage()));
-		}
+	    try {
+	    TaxAmount.portion = portion.getValue();
+	    } catch (Exception error) {
+	    errors.add(new InputError(portion.getFieldName(), error.getMessage()));
+	    }
 
 
-		try {
-			TaxAmount.holdingPeriodRatio = holdingPeriodRatio.getValue();
-		} catch (Exception error) {
-			errors.add(new InputError(holdingPeriodRatio.getFieldName(), error.getMessage()));
-		}
+	    try {
+	    TaxAmount.holdingPeriodRatio = holdingPeriodRatio.getValue();
+	    } catch (Exception error) {
+	    errors.add(new InputError(holdingPeriodRatio.getFieldName(), error.getMessage()));
+	    }
 
-		try {
-			TaxAmount.childrenCount = childrenCount.getValue();
-		} catch (Exception error) {
-			errors.add(new InputError(childrenCount.getFieldName(), error.getMessage()));
-		}
+	    try {
+	    TaxAmount.childrenCount = childrenCount.getValue();
+	    } catch (Exception error) {
+	    errors.add(new InputError(childrenCount.getFieldName(), error.getMessage()));
+	    }
 
-		try {
-			TaxAmount.exemption = exemption.getValue();
-		} catch (Exception error) {
-			errors.add(new InputError(exemption.getFieldName(), error.getMessage()));
-		}
+	    try {
+	    TaxAmount.exemption = exemption.getValue();
+	    } catch (Exception error) {
+	    errors.add(new InputError(exemption.getFieldName(), error.getMessage()));
+	    }
 
-		return errors;
-	}
-	/**
-	 * Метод, отвечающий за непосредственно расчет суммы налога, необходимой к уплате
-	 * по заданным в нем формулам
-	 *
-	 * @return the double - возвращаемая сумма налога, необходимая к уплате
-	 */
+	    return errors;
+	    }
+
+
+	
 	public static BigDecimal calculate() {
 		//EnumSwitch enswitch = new EnumSwitch();
+		
+		double evaporater = 0;
 		double finalbid;
 		double finalExemption=TaxAmount.exemption;
 
@@ -114,8 +110,27 @@ public final class TaxAmount{
 		//enswitch.enumuse();
 		
 		//finalbid= enswitch.getFinalbid();
+		
 		finalbid= 0.165;
 		finalbidbig = BigDecimal.valueOf(finalbid);
+		
+		if((int)TaxAmount.deduction == 10) {
+			evaporater = 5;
+
+		}else if((int)TaxAmount.deduction == 20) {
+			evaporater = 5;
+
+		}else if((int)TaxAmount.deduction == 50) {
+			evaporater = 7;
+
+		}else if((int)TaxAmount.deduction == 0) {
+			evaporater = 0;
+			
+		}else {
+			evaporater = 0;
+		}
+
+		
 
 		if (childrenCount >= 3) {
 			Deductionbig=BigDecimal.valueOf(deduction);
