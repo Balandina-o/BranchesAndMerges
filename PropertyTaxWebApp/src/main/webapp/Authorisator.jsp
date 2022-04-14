@@ -9,7 +9,7 @@
 <body>
 
 
-<form name="authoForm" action="${pageContext.request.contextPath}/AuthoServlet" method="GET">
+<form name="authoForm" action="AuthoServlet" method="GET">
     <h3>ВХОД</h3>
 
     <div class="form-input">
@@ -26,6 +26,11 @@
         <button type="submit" name="sign" value="sign"> Зарегистрироваться </button>
         <button type="submit" name="sign" value="sign"> Войти </button>
     </div>
+    
+        <div class="form-input">
+        <input type="" name="error" value="${error}"/>
+    </div>
+    
 </form>
 
 </body>
