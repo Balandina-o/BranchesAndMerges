@@ -41,6 +41,8 @@ public final class TaxAmount{
 		//List <Double> values = Arrays.asList(TaxAmount.cadastralValue, TaxAmount.inventoryTax, TaxAmount.square, TaxAmount.portion, TaxAmount.holdingPeriodRatio, TaxAmount.childrenCount, TaxAmount.exemption);
 		//List <Object> samples = Arrays.asList(cadastralValue, inventoryTax, square, portion, holdingPeriodRatio, childrenCount, exemption);
 		
+		
+		
 		try {
 		    TaxAmount.cadastralValue = cadastralValue.getValue();
 	    } catch (Exception error) {
@@ -84,6 +86,38 @@ public final class TaxAmount{
 	    errors.add(new InputError(exemption.getFieldName(), error.getMessage()));
 	    }
 
+
+			
+		if (TaxAmount.deduction < TaxAmount.square) {
+	
+		} else{
+			String message = "";
+			if((int)TaxAmount.deduction == 10){
+				message="комнаты";
+				
+			}else if((int)TaxAmount.deduction == 20){
+				message = "квартиры";
+				
+			}else if((int)TaxAmount.deduction == 50){
+				message = "жилого дома";
+			}
+
+				errors.add(new InputError(square.getFieldName(), "Площадь для " + message + " должна быть больше "+ TaxAmount.deduction +" м"));
+		}
+
+
+		if(TaxAmount.cadastralValue > TaxAmount.inventoryTax) {
+
+		}else {
+			try {
+				throw new Exception("Налог от инвентариз. стоимости должен быть меньше кадастровой стоимости");
+
+			} catch (Exception error) {
+				errors.add(new InputError(inventoryTax.getFieldName(), error.getMessage()));
+
+			}
+		} 
+	    
 	    return errors;
 	    }
 
@@ -111,7 +145,7 @@ public final class TaxAmount{
 		
 		//finalbid= enswitch.getFinalbid();
 		
-		finalbid= 0.165;
+		finalbid= 0.11;
 		finalbidbig = BigDecimal.valueOf(finalbid);
 		
 		if((int)TaxAmount.deduction == 10) {

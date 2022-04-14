@@ -1,6 +1,7 @@
 /home/balandina/git/BranchesAndMerges/PropertyTaxWebApp/src/main/java/kurs/InputText.java
 /home/balandina/git/BranchesAndMerges/PropertyTaxWebApp/src/main/java/kurs/InputExemption.java
 /home/balandina/git/BranchesAndMerges/PropertyTaxWebApp/src/main/java/kurs/InputHoldingPeriodRatio.java
+/home/balandina/git/BranchesAndMerges/PropertyTaxWebApp/src/main/java/kurs/ErrorCheck.java
 /home/balandina/git/BranchesAndMerges/PropertyTaxWebApp/src/main/java/kurs/CalcServlet.java
 /home/balandina/git/BranchesAndMerges/PropertyTaxWebApp/src/main/java/kurs/InputError.java
 /home/balandina/git/BranchesAndMerges/PropertyTaxWebApp/src/main/java/kurs/InputNumber.java
