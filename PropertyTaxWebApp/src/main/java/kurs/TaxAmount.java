@@ -22,8 +22,8 @@ public final class TaxAmount{
 		TaxAmount.holdingPeriodRatioText = holdingPeriodRatioText;
 		TaxAmount.childrenCountText = childrenCountText;
 		TaxAmount.exemptionText = exemptionText;
-		TaxAmount.reductionFactor = town;
-		TaxAmount.deduction = property;
+		TaxAmount.reductionFactor = town; //муниц. образования
+		TaxAmount.deduction = property; //тип недвижимости
 		
 	}
 	
@@ -122,6 +122,7 @@ public final class TaxAmount{
 	    }
 
 
+	//
 	
 	public static BigDecimal calculate() {
 		//EnumSwitch enswitch = new EnumSwitch();
@@ -147,6 +148,11 @@ public final class TaxAmount{
 		
 		finalbid= 0.11;
 		finalbidbig = BigDecimal.valueOf(finalbid);
+		
+		
+		
+		
+		
 		
 		if((int)TaxAmount.deduction == 10) {
 			evaporater = 5;

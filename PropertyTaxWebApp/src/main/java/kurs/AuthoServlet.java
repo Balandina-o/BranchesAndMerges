@@ -15,21 +15,36 @@ public class AuthoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		String login, password, page;
 		response.setContentType("text/html");
 
-		login = request.getParameter("login");
+		login = request.getParameter("login"); //.trim();
 		password = request.getParameter("password");
 
-		
-		if(login == "") {
-			request.setAttribute("error", "Неверный логин или пароль!");
-			page = "/Authorisator.jsp";
-
-		}else { 
+		if (!login.contains(" ") & !password.contains(" ")) { //;
+			
+			
+			//передача логина и пароля в Менеджер
+			
 			page = "/Calculator.jsp";
-
+			
+		}else {
+			page = "/Authorisator.jsp";
+			request.setAttribute("error", "Error");
+			
 		}
+
+		
+		/*
+		 * if(login == "") {
+		 * 
+		 * page = "/Authorisator.jsp";
+		 * 
+		 * }else { page = "/Calculator.jsp";
+		 * 
+		 * }
+		 */
 
 		RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(page);
 		requestDispatcher.forward(request, response);
