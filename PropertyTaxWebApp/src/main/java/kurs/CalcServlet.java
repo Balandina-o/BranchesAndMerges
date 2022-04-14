@@ -15,24 +15,22 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/CalcServlet")
 public class CalcServlet extends HttpServlet {
-	
-	private String kadastr, tax, square, part, period, childrens, benefit, town, property, textField;
 
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String kadastr, tax, square, part, period, childrens, benefit, town, property;
 		response.setContentType("text/html");
 
-		this.town = request.getParameter("town");
-		this.property = request.getParameter("property");
-		this.kadastr = request.getParameter("kadastr");
-		this.tax = request.getParameter("tax");
-		this.square = request.getParameter("square");
-		this.part = request.getParameter("part");
-		this.period = request.getParameter("period");
-		this.childrens = request.getParameter("childrens");
-		this.benefit = request.getParameter("benefit");
-
+		town = request.getParameter("town");
+		property = request.getParameter("property");
+		kadastr = request.getParameter("kadastr");
+		tax = request.getParameter("tax");
+		square = request.getParameter("square");
+		part = request.getParameter("part");
+		period = request.getParameter("period");
+		childrens = request.getParameter("childrens");
+		benefit = request.getParameter("benefit");
 
 		request.setAttribute("kadastr", kadastr);
 		request.setAttribute("tax", tax);
@@ -42,20 +40,7 @@ public class CalcServlet extends HttpServlet {
 		request.setAttribute("childrens", childrens);
 		request.setAttribute("benefit", benefit);
 
-		
-		request.setAttribute("result", calculate());
-		RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/Calculator.jsp");
-		requestDispatcher.forward(request, response);
-
-	}
-	
-	
-
-	public String calculate() {
-		//double reductionFactor = Double.valueOf(this.getRegionConst());
-		//double deduction = Double.valueOf(this.getPropertyConst2());
-
-		TaxAmount taxamount = new TaxAmount(
+		RequestGenerator reqGen = new RequestGenerator(
 				kadastr,
 				tax,
 				square,
@@ -66,54 +51,20 @@ public class CalcServlet extends HttpServlet {
 								Double.parseDouble(town),
 								Double.parseDouble(property)
 				);
-
-
-		List<InputError> errors = taxamount.validate();
-		String message = "";
-		String text = "";
 		
-		if (errors.size() > 0) {
-			for (int i = 0; i < errors.size(); i++) {
-				message += errors.get(i).getName() + ": " + errors.get(i).getMessage() + "\n";
-				
-				
-			}
+		if(reqGen.check() != null) {
+			request.setAttribute("warnings", reqGen.check());
 			
-			return message;
-
-		} else {
-			
-			BigDecimal ttt = taxamount.calculate();
-			text = ttt.toString();
-			
-			return text;
+		}else {
+			request.setAttribute("result", reqGen.count());
 			
 		}
+		
+		RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/Calculator.jsp");
+		requestDispatcher.forward(request, response);
+
 	}
-
-	private String getTextFieldByName(String name) throws Exception {
-		String field;
-
-		switch (name) {
-		case "Кадастровая стоимость": field = "kadastr";
-		break;
-		case "Инвентаризационный налог": field = "tax";
-		break;
-		case "Площадь": field = "square";
-		break;
-		case "Размер доли": field = "part";
-		break;
-		case "Период владения": field = "period";
-		break;
-		case "Количество детей": field = "childrens";
-		break;
-		case "Льгота": field = "benefit";
-		break;
-		default: throw new Exception("Недопустимое имя параметра");
-		}
-
-		return field;
-	}
-
-
+	
+	
+	
 }
