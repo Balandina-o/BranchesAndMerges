@@ -5,15 +5,4 @@
   <welcome-file-list>
     <welcome-file>NewFile.jsp</welcome-file>
   </welcome-file-list>
-  
-    <display-name>FirstTry</display-name>
-<servlet>
-<servlet-name>calc</servlet-name>
-<servlet-class>kurs.HelloServlet</servlet-class>
-</servlet>
-
-<servlet-mapping>
-<servlet-name>calc</servlet-name>
-<url-pattern>/hello</url-pattern>
-</servlet-mapping>
 </web-app>
